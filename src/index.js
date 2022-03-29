@@ -1,12 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { BrowserRouter, Routes, Route, useRoutes } from "react-router-dom"
 import reportWebVitals from './reportWebVitals';
+import TodoContainer from './functionBased/components/TodoContainer';
+import './styles/App.css'
+import Navbar from './functionBased/components/Navbar';
+import About from './functionBased/pages/About';
+import NoMatch from './functionBased/pages/NoMatch'
+import SinglePage from './functionBased/pages/SinglePage';
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navbar />}>
+          <Route path="" element={<TodoContainer />} />
+          <Route path="home" element={<TodoContainer />} />
+          <Route path="about" element={<About />}>
+            <Route index element={<h3>Select a link above</h3>} />
+            <Route path=":slug" element={<SinglePage />} />
+          </Route>
+          <Route path="*" element={<NoMatch />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
